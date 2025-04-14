@@ -1,0 +1,89 @@
+﻿@model ParfumBD.Web.Models.Carrito
+@{
+    ViewData["Title"] = "Mi Carrito";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model == null || Model.DetallesCarrito == null || !Model.DetallesCarrito.Any())
+{
+    <div class="alert alert-info mt-4">
+        <p>Tu carrito está vacío.</p>
+        <a asp-controller="Perfumes" asp-action="Index" class="btn btn-primary mt-2">
+            Explorar Perfumes
+        </a>
+    </div>
+}
+else
+{
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Productos en tu carrito</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DetallesCarrito)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if (!string.IsNullOrEmpty(item.ImagenPerfume))
+                                        {
+                                            <img src="@item.ImagenPerfume" alt="@item.NombrePerfume" class="img-thumbnail me-2" style="width: 50px; height: 50px;">
+                                        }
+                                        <span>@item.NombrePerfume</span>
+                                    </div>
+                                </td>
+                                <td>$@item.PrecioUnitario.ToString("N2")</td>
+                                <td>
+                                    <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center">
+                                        <input type="hidden" name="idDetalle" value="@item.IdDetalle" />
+                                        <input type="number" name="cantidad" value="@item.Cantidad" min="1" class="form-control form-control-sm" style="width: 70px;" />
+                                        <button type="submit" class="btn btn-sm btn-outline-primary ms-2">
+                                            <i class="bi bi-arrow-repeat"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>$@item.Subtotal.ToString("N2")</td>
+                                <td>
+                                    <form asp-action="RemoveItem" method="post">
+                                        <input type="hidden" name="idDetalle" value="@item.IdDetalle" />
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                            <td><strong>$@Model.Total.ToString("N2")</strong></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a asp-controller="Perfumes" asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Seguir Comprando
+            </a>
+            <a asp-controller="Checkout" asp-action="Index" class="btn btn-success">
+                <i class="bi bi-credit-card"></i> Proceder al Pago
+            </a>
+        </div>
+    </div>
+}

@@ -1,0 +1,56 @@
+﻿@model ParfumBD.Web.Models.UsuarioRegistro
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label">Nombre Completo</label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Correo" class="form-label">Correo Electrónico</label>
+                        <input asp-for="Correo" class="form-control" />
+                        <span asp-validation-for="Correo" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Contraseña" class="form-label">Contraseña</label>
+                        <input asp-for="Contraseña" class="form-control" type="password" />
+                        <span asp-validation-for="Contraseña" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ConfirmarContraseña" class="form-label">Confirmar Contraseña</label>
+                        <input asp-for="ConfirmarContraseña" class="form-control" type="password" />
+                        <span asp-validation-for="ConfirmarContraseña" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <p>¿Ya tienes una cuenta? <a asp-action="Login">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

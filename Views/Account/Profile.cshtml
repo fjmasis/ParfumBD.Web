@@ -1,0 +1,53 @@
+﻿@model ParfumBD.Web.Models.Usuario
+@{
+    ViewData["Title"] = "Mi Perfil";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="UpdateProfile" method="post">
+                    <input type="hidden" asp-for="IdUsuario" />
+                    <input type="hidden" asp-for="FechaRegistro" />
+                    <input type="hidden" asp-for="TipoUsuario" />
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label">Nombre Completo</label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Correo" class="form-label">Correo Electrónico</label>
+                        <input asp-for="Correo" class="form-control" />
+                        <span asp-validation-for="Correo" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de Usuario</label>
+                        <input class="form-control" value="@Model.TipoUsuario" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Fecha de Registro</label>
+                        <input class="form-control" value="@Model.FechaRegistro.ToString("dd/MM/yyyy")" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ParfumBD.Web.Models.Perfume>
+@{
+    ViewData["Title"] = "Perfumes";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-4">
+    @foreach (var perfume in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                @if (!string.IsNullOrEmpty(perfume.Imagen))
+                {
+                    <img src="@perfume.Imagen" class="card-img-top" alt="@perfume.Nombre">
+                }
+                else
+                {
+                    <img src="~/images/perfume-placeholder.jpg" class="card-img-top" alt="@perfume.Nombre">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@perfume.Nombre</h5>
+                    <p class="card-text">@perfume.Marca</p>
+                    <p class="card-text fw-bold">$@perfume.Precio.ToString("N2")</p>
+                    <a asp-action="Details" asp-route-id="@perfume.IdPerfume" class="btn btn-primary">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
