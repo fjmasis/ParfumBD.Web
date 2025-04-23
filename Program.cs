@@ -20,6 +20,8 @@ builder.Services.AddHttpContextAccessor();
 // Add HttpClient
 builder.Services.AddHttpClient();
 
+
+
 // Register services
 builder.Services.AddScoped<IApiService, ApiService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
